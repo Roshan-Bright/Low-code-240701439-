@@ -1,0 +1,2329 @@
+/*
+ * Author       : roshanbright.r.2024.cse_r
+ * Generated on : 25-Oct-2026 15:40:12
+ * Version      : 1.0
+ */
+ application "Restaurant Ordering System"
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "Asia/Kolkata"
+ 	time format = "24-hr"
+
+ 	forms
+	{
+		form Category
+		{
+			success message = "Category Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Category
+			(
+    			type = text
+				displayname = "Category_Name"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Display_Order
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Ingredient
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Ingredient_Name
+			(
+    			type = text
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Unit
+			(
+				type = picklist
+				maxchar = 100
+				values = {"kg","g","L","ml","pcs"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Current_Stock
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Reorder_Level
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Supplier_Email
+			(
+    			type = email
+				maxchar = 80
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Menu_Item
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Item_Name
+			(
+    			type = text
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Category
+			(
+				type = picklist	
+				values  = Category.ID
+    			displayformat = [Category]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Price
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Image
+			(
+    			type = image
+				source  = file
+				aspect ratio = original
+				camera = primary
+				show gallery = true
+				switch camera = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Food_Type
+			(
+				type = radiobuttons
+				maxchar = 100
+				values = {"Veg","Non-Veg"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Prep_Time_Min
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Available
+			(
+    			type = checkbox
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Order
+		{
+			success message = "Order Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Order_ID
+			(
+    			type = autonumber
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Table
+			(
+				type = picklist	
+				values  = Restaurant_Table.ID
+    			displayformat = [Table_No]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Status
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Placed","Accepted","Preparing","Ready","Served","Billed","Paid","Cancelled"}
+				initial value = "Placed"
+				private = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Order_Time
+			(
+    			type = datetime
+				initial value = "${zoho.currenttime}"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+				private = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Total
+			(
+				type = decimal
+				private = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Payment_Status
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Unpaid","Paid"}
+				initial value = "Unpaid"
+				private = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Stock_Deducted
+			(
+    			type = checkbox
+				initial value = false
+				private = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Order_Item
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Order
+			(
+				type = picklist	
+				values  = Order.ID
+    			displayformat = [Order_ID]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Menu_Item
+			(
+				type = picklist	
+				values  = Menu_Item.ID
+    			displayformat = [Item_Name]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Quantity
+			(
+				type = number
+				initial value = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Price
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Line_Total
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Special_Notes
+			(
+    			type = text
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Payment
+		{
+			success message = "Payment Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Order
+			(
+				type = picklist	
+				values  = Order.ID
+    			displayformat = [Order_ID]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Amount
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Payment_Mode
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Cash","Card","UPI"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Paid_On
+			(
+    			type = datetime
+				initial value = "${zoho.currenttime}"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Purchase_Request
+		{
+			success message = "Data Added Successfully!"
+			Status
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Ingredient
+			(
+				type = picklist	
+				values  = Ingredient.ID
+    			displayformat = [Ingredient_Name]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Suggested_Qty
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Status1
+			(
+				type = picklist
+				displayname = "Status"
+				maxchar = 100
+				values = {"Pending","Ordered","Received"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Recipe
+		{
+			success message = "Recipe Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Menu_Item
+			(
+				type = picklist	
+				values  = Menu_Item.ID
+    			displayformat = [Item_Name]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Ingredient
+			(
+				type = picklist	
+				values  = Ingredient.ID
+    			displayformat = [Ingredient_Name]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Qty_Required
+			(
+				type = decimal
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form Restaurant_Table
+		{
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			Table_No
+			(
+				type = number
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Capacity
+			(
+				type = number
+				displayname = "Capacity "
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			Status
+			(
+				type = picklist
+				maxchar = 100
+				values = {"Free","Occupied","Billing"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+	}
+	reports
+	{
+		default list All_Categories
+		{
+			displayName = "All Categories"
+			show all rows from Category    
+			(
+				Category as "Category_Name"
+				Display_Order
+			)
+		}
+		default list Menu_Item_Report
+		{
+			displayName = "Menu_Item Report"
+			show all rows from Menu_Item    
+			(
+				Item_Name
+				Category
+				Price
+				Image
+				Food_Type
+				Prep_Time_Min
+				Available
+			)
+		}
+		default list Ingredient_Report
+		{
+			displayName = "Ingredient Report"
+			show all rows from Ingredient    
+			(
+				Ingredient_Name
+				Unit
+				Current_Stock
+				Reorder_Level
+				Supplier_Email
+			)
+		}
+		default list All_Recipes
+		{
+			displayName = "All Recipes"
+			show all rows from Recipe    
+			(
+				Menu_Item
+				Ingredient
+				Qty_Required
+			)
+		}
+		default list Restaurant_Table_Report
+		{
+			displayName = "Restaurant_Table Report"
+			show all rows from Restaurant_Table    
+			(
+				Table_No
+				Capacity as "Capacity "
+				Status
+			)
+		}
+		default list All_Payments
+		{
+			displayName = "All Payments"
+			show all rows from Payment    
+			(
+				Order
+				Amount
+				Payment_Mode
+				Paid_On
+			)
+		}
+		default list All_Orders
+		{
+			displayName = "All Orders"
+			show all rows from Order    
+			(
+				Order_ID
+				Table
+				Status
+				Total
+				Payment_Status
+				Stock_Deducted
+				Order_Time
+			)
+		}
+		default list Purchase_Request_Report
+		{
+			displayName = "Purchase_Request Report"
+			show all rows from Purchase_Request    
+			(
+				Ingredient
+				Suggested_Qty
+				Status1 as "Status"
+			)
+		}
+		kanban Kitchen_Display
+		{
+			displayName = "Kitchen Display"
+			show all rows from Order    
+			(
+				Order_ID
+				Table
+				(
+					view = Restaurant_Table_Report
+				)
+				Status
+				Total
+				Payment_Status
+				Table.Table_No
+			)
+			options
+			(
+	 			display field = Status
+	 		)
+		}
+		default list Order_Item_Report
+		{
+			displayName = "Order_Item Report"
+			show all rows from Order_Item    
+			(
+				Order
+				Menu_Item
+				Quantity
+				Price
+				Line_Total
+				Special_Notes
+			)
+		}
+		pivotchart Top_Selling_Items
+		{
+			displayname = "Top Selling Items"
+			based on Autoview_1791960757425_Order_Item
+				show all rows from Order_Item
+				(
+			Order 
+			Menu_Item 
+			Quantity 
+			Price 
+			Line_Total 
+			Special_Notes 
+				)
+		}
+		pivotchart Sales_by_Category
+		{
+			displayname = "Sales by Category"
+			based on Autoview_1791960757425_Order_Item
+				show all rows from Order_Item
+				(
+			Order 
+			Menu_Item 
+			Quantity 
+			Price 
+			Line_Total 
+			Special_Notes 
+				)
+		}
+		pivotchart Revenue_Trend
+		{
+			displayname = "Revenue Trend"
+			based on Autoview_1791982439171_Order
+				show all rows from Order
+				(
+			Order_ID 
+			Table 
+			Status 
+			Order_Time 
+			Total 
+			Payment_Status 
+			Stock_Deducted 
+				)
+		}
+		pivotchart Orders_by_Status
+		{
+			displayname = "Orders by Status"
+			based on Autoview_1791982439171_Order
+				show all rows from Order
+				(
+			Order_ID 
+			Table 
+			Status 
+			Order_Time 
+			Total 
+			Payment_Status 
+			Stock_Deducted 
+				)
+		}
+	}
+	pages
+	{
+		page Dashboard
+		{
+			displayname = "Dashboard"
+			Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t\n</layout>\n</zml>"
+		}
+		page Sales_Dashboard
+		{
+			displayname = "Sales Dashboard"
+			Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\twebDeviceConfig='{\"layout\":{\"displayType\":\"card\",\"design\":\"fluid\",\"style\":\"padding-right:0px;padding-top:0px;padding-bottom:0px;padding-left:px;\"}}'\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<dsp id='html_snippet' elementName='HTML Snippet'\n bgColor=\"#FFFFFF\" \n>\n\t<![CDATA[htmlpage html_snippet()\ncontent\n&lt;%{\n\tpaidOrders = Order[Payment_Status == &quot;Paid&quot;];\n\tpaidCount = paidOrders.count();\n\trevenue = ifnull(paidOrders.sum(Total),0);\n\ttotalOrders = Order[ID != 0].count();\n\tactiveOrders = Order[Status != &quot;Paid&quot; &amp;&amp; Status != &quot;Cancelled&quot;].count();\n\titemsSold = ifnull(Order_Item[ID != 0].sum(Quantity),0);\n\tavgOrder = 0;\n\tif(paidCount &gt; 0)\n\t{\n\t\tavgOrder = (revenue / paidCount).round(2);\n\t}\n\tlowCount = 0;\n\tfor each  ing in Ingredient[ID != 0]\n\t{\n\t\tif(ing.Current_Stock &lt;= ing.Reorder_Level)\n\t\t{\n\t\t\tlowCount = lowCount + 1;\n\t\t}\n\t}\n\t%&gt;\n&lt;style&gt;\n  .ros { font-family: &quot;Segoe UI&quot;, Roboto, Arial, sans-serif; color: #e6edf7;\n         background: radial-gradient(1200px 400px at 10% -20%, #1d3b6e 0%, #0b1220 60%);\n         border-radius: 14px; padding: 22px; box-shadow: 0 8px 30px rgba(0,0,0,.35); }\n  .ros-top { display: flex; justify-content: space-between; align-items: center;\n             flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }\n  .ros-title { font-size: 22px; font-weight: 700; letter-spacing: .5px; }\n  .ros-title span { color: #4ade80; }\n  .ros-sub { font-size: 12px; color: #8fa3c4; letter-spacing: 1.5px; text-transform: uppercase; }\n  .ros-right { text-align: right; }\n  .ros-clock { font-family: Consolas, &quot;Courier New&quot;, monospace; font-size: 18px; color: #7dd3fc; }\n  .ros-live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #4ade80; }\n  .ros-dot { width: 9px; height: 9px; border-radius: 50%; background: #4ade80;\n             box-shadow: 0 0 0 0 rgba(74,222,128,.7); animation: ros-pulse 1.6s infinite; }\n  @keyframes ros-pulse { 70% { box-shadow: 0 0 0 10px rgba(74,222,128,0); }\n                         100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); } }\n  .ros-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }\n  .ros-card { background: rgba(255,255,255,.05); border: 1px solid rgba(125,211,252,.18);\n              border-radius: 12px; padding: 16px; position: relative; overflow: hidden;\n              transition: transform .2s, border-color .2s; }\n  .ros-card:hover { transform: translateY(-3px); border-color: #7dd3fc; }\n  .ros-card::before { content: &quot;&quot;; position: absolute; left: 0; top: 0; height: 100%; width: 4px;\n                      background: var(--c, #38bdf8); }\n  .ros-label { font-size: 11px; color: #8fa3c4; letter-spacing: 1.4px; text-transform: uppercase; }\n  .ros-value { font-family: Consolas, &quot;Courier New&quot;, monospace; font-size: 30px; font-weight: 700;\n               margin-top: 6px; color: #fff; }\n  .ros-note { font-size: 11px; color: #6b7f9e; margin-top: 4px; }\n  .ros-bar { height: 4px; background: rgba(255,255,255,.08); border-radius: 4px; margin-top: 10px; }\n  .ros-bar i { display: block; height: 100%; border-radius: 4px; background: var(--c, #38bdf8); }\n&lt;/style&gt;\n\n&lt;div class=&quot;ros&quot;&gt;\n  &lt;div class=&quot;ros-top&quot;&gt;\n    &lt;div&gt;\n      &lt;div class=&quot;ros-title&quot;&gt;Restaurant &lt;span&gt;Operations&lt;/span&gt; Console&lt;/div&gt;\n      &lt;div class=&quot;ros-sub&quot;&gt;Orders &amp;bull; Kitchen &amp;bull; Inventory &amp;bull; Revenue&lt;/div&gt;\n    &lt;/div&gt;\n    &lt;div class=&quot;ros-right&quot;&gt;\n      &lt;div class=&quot;ros-clock&quot; id=&quot;rosClock&quot;&gt;--:--:--&lt;/div&gt;\n      &lt;div class=&quot;ros-live&quot;&gt;&lt;span class=&quot;ros-dot&quot;&gt;&lt;/span&gt; LIVE DATA&lt;/div&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n\n  &lt;div class=&quot;ros-grid&quot;&gt;\n    &lt;div class=&quot;ros-card&quot; style=&quot;--c:#4ade80&quot;&gt;\n      &lt;div class=&quot;ros-label&quot;&gt;Revenue (Paid)&lt;/div&gt;\n      &lt;div class=&quot;ros-value&quot;&gt;&amp;#8377;&lt;%=revenue%&gt;&lt;/div&gt;\n      &lt;div class=&quot;ros-note&quot;&gt;Total collected&lt;/div&gt;\n      &lt;div class=&quot;ros-bar&quot;&gt;&lt;i style=&quot;width:100%&quot;&gt;&lt;/i&gt;&lt;/div&gt;\n    &lt;/div&gt;\n\n    &lt;div class=&quot;ros-card&quot; style=&quot;--c:#38bdf8&quot;&gt;\n      &lt;div class=&quot;ros-label&quot;&gt;Total Orders&lt;/div&gt;\n      &lt;div class=&quot;ros-value&quot;&gt;&lt;%=totalOrders%&gt;&lt;/div&gt;\n      &lt;div class=&quot;ros-note&quot;&gt;&lt;%=paidCount%&gt; paid&lt;/div&gt;\n      &lt;div class=&quot;ros-bar&quot;&gt;&lt;i style=&quot;width:&lt;%=if(totalOrders &gt; 0,(paidCount * 100 / totalOrders).round(0),0)%&gt;%&quot;&gt;&lt;/i&gt;&lt;/div&gt;\n    &lt;/div&gt;\n\n    &lt;div class=&quot;ros-card&quot; style=&quot;--c:#fbbf24&quot;&gt;\n      &lt;div class=&quot;ros-label&quot;&gt;Active Orders&lt;/div&gt;\n      &lt;div class=&quot;ros-value&quot;&gt;&lt;%=activeOrders%&gt;&lt;/div&gt;\n      &lt;div class=&quot;ros-note&quot;&gt;In kitchen / unpaid&lt;/div&gt;\n      &lt;div class=&quot;ros-bar&quot;&gt;&lt;i style=&quot;width:&lt;%=if(totalOrders &gt; 0,(activeOrders * 100 / totalOrders).round(0),0)%&gt;%&quot;&gt;&lt;/i&gt;&lt;/div&gt;\n    &lt;/div&gt;\n\n    &lt;div class=&quot;ros-card&quot; style=&quot;--c:#a78bfa&quot;&gt;\n      &lt;div class=&quot;ros-label&quot;&gt;Items Sold&lt;/div&gt;\n      &lt;div class=&quot;ros-value&quot;&gt;&lt;%=itemsSold%&gt;&lt;/div&gt;\n      &lt;div class=&quot;ros-note&quot;&gt;Across all orders&lt;/div&gt;\n      &lt;div class=&quot;ros-bar&quot;&gt;&lt;i style=&quot;width:100%&quot;&gt;&lt;/i&gt;&lt;/div&gt;\n    &lt;/div&gt;\n\n    &lt;div class=&quot;ros-card&quot; style=&quot;--c:#f472b6&quot;&gt;\n      &lt;div class=&quot;ros-label&quot;&gt;Avg Order Value&lt;/div&gt;\n      &lt;div class=&quot;ros-value&quot;&gt;&amp;#8377;&lt;%=avgOrder%&gt;&lt;/div&gt;\n      &lt;div class=&quot;ros-note&quot;&gt;Per paid order&lt;/div&gt;\n      &lt;div class=&quot;ros-bar&quot;&gt;&lt;i style=&quot;width:100%&quot;&gt;&lt;/i&gt;&lt;/div&gt;\n    &lt;/div&gt;\n\n    &lt;div class=&quot;ros-card&quot; style=&quot;--c:#f87171&quot;&gt;\n      &lt;div class=&quot;ros-label&quot;&gt;Low Stock Alerts&lt;/div&gt;\n      &lt;div class=&quot;ros-value&quot;&gt;&lt;%=lowCount%&gt;&lt;/div&gt;\n      &lt;div class=&quot;ros-note&quot;&gt;At or below reorder level&lt;/div&gt;\n      &lt;div class=&quot;ros-bar&quot;&gt;&lt;i style=&quot;width:&lt;%=if(lowCount &gt; 0,100,0)%&gt;%&quot;&gt;&lt;/i&gt;&lt;/div&gt;\n    &lt;/div&gt;\n  &lt;/div&gt;\n&lt;/div&gt;\n\n&lt;script&gt;\n  (function () {\n    function tick() {\n      var el = document.getElementById(&quot;rosClock&quot;);\n      if (el) { el.textContent = new Date().toLocaleTimeString([], {hour12: false}); }\n    }\n    tick();\n    setInterval(tick, 1000);\n  })();\n&lt;/script&gt;\n&lt;%\n\n}%&gt;]]>\n</dsp>\n</column>\n</row><row>\n\t<column\n   \t\t width='50%'\n   \t>\n\t<report \n\telementName='Report'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'Top_Selling_Items'\n\t\n\t\tiszreport = 'true'\n\theightType = 'custom'\n\theightValue = '350'\n/>\n</column><column\n   \t\t width='50%'\n   \t>\n\t<report \n\telementName='Report 1'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'Sales_by_Category'\n\t\tallowPublicAccess = 'true'\n\t\n\t\tiszreport = 'true'\n\theightType = 'auto'\n\theightValue = '120'\n/>\n</column>\n</row><row>\n\t<column\n   \t\t width='50%'\n   \t>\n\t<report \n\telementName='Report 2'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'Orders_by_Status'\n\t\tallowPublicAccess = 'true'\n\t\n\t\tiszreport = 'true'\n\theightType = 'custom'\n\theightValue = '450'\n/>\n</column><column\n   \t\t width='50%'\n   \t>\n\t<report \n\telementName='Report 3'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'Revenue_Trend'\n\t\tallowPublicAccess = 'true'\n\t\n\t\tiszreport = 'true'\n\theightType = 'auto'\n\theightValue = '700'\n/>\n</column>\n</row>\n</layout>\n</zml>"
+		}
+	}
+
+
+
+
+		workflow
+		{
+		form
+		{
+			Mark_Table_Occupied as "Mark Table Occupied"
+			{
+				type =  form
+				form = Order
+
+				record event = on add
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											t = Restaurant_Table[ID == input.Table];
+										t.Status="Occupied";
+						)
+					}
+				}
+
+			}
+			Go_To_Items as "Go To Items"
+			{
+				type =  form
+				form = Order
+
+				record event = on add
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											openUrl("#Form:Order_Item?Order=" + input.ID,"same window");
+						)
+					}
+				}
+
+			}
+			Add_Another as "Add Another"
+			{
+				type =  form
+				form = Order_Item
+
+				record event = on add
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											openUrl("#Form:Order_Item?Order=" + input.Order,"same window");
+						)
+					}
+				}
+
+			}
+			Fetch_Price1 as "Fetch Price"
+			{
+				type =  form
+				form = Order_Item
+
+				record event = on add or edit
+
+				on user input of Menu_Item
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											input.Price = Menu_Item[ID == input.Menu_Item].Price;
+										input.Line_Total = input.Price * input.Quantity;
+						)
+					}
+				}
+
+			}
+			Update_Line_Total1 as "Update Line Total"
+			{
+				type =  form
+				form = Order_Item
+
+				record event = on add or edit
+
+				on user input of Quantity
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											input.Line_Total = input.Price * input.Quantity;
+						)
+					}
+				}
+
+			}
+			Update_Order_Total as "Update Order Total"
+			{
+				type =  form
+				form = Order_Item
+
+				record event = on add or edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											items = Order_Item[Order == input.Order];
+										total = 0;
+										for each  i in items
+										{
+											total = total + i.Line_Total;
+										}
+										o = Order[ID == input.Order];
+										o.Total=total;
+						)
+					}
+				}
+
+			}
+			Check_Availability as "Check Availability"
+			{
+				type =  form
+				form = Order_Item
+
+				record event = on add or edit
+
+				on validate
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											item = Menu_Item[ID == input.Menu_Item];
+										if(item.Available == false)
+										{
+											alert item.Item_Name + " is currently unavailable";
+											cancel submit;
+										}
+						)
+					}
+				}
+
+			}
+			Deduct_Stock as "Deduct Stock"
+			{
+				type =  form
+				form = Order
+
+				record event = on edit
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											if(input.Status == "Accepted" && input.Stock_Deducted == false)
+										{
+											items = Order_Item[Order == input.ID];
+											for each  i in items
+											{
+												recipeList = Recipe[Menu_Item == i.Menu_Item];
+												for each  r in recipeList
+												{
+													ing = Ingredient[ID == r.Ingredient];
+													ing.Current_Stock=ing.Current_Stock - r.Qty_Required * i.Quantity;
+													if(ing.Current_Stock <= ing.Reorder_Level)
+													{
+														insert into Purchase_Request
+														[
+															Ingredient=ing.ID
+															Suggested_Qty=ing.Reorder_Level * 2
+															Status="Pending"
+															Added_User=zoho.loginuser
+														]
+													}
+												}
+											}
+											o = Order[ID == input.ID];
+											o.Stock_Deducted=true;
+										}
+						)
+					}
+				}
+
+			}
+			Fetch_Amount as "Fetch Amount"
+			{
+				type =  form
+				form = Payment
+
+				record event = on add or edit
+
+				on user input of Order
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											input.Amount = Order[ID == input.Order].Total;
+						)
+					}
+				}
+
+			}
+			Complete_Payment as "Complete Payment"
+			{
+				type =  form
+				form = Payment
+
+				record event = on add
+
+				on success
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											o = Order[ID == input.Order];
+										o.Payment_Status="Paid";
+										o.Status="Paid";
+										t = Restaurant_Table[ID == o.Table];
+										t.Status="Free";
+						)
+					}
+				}
+
+			}
+		}
+
+
+
+
+
+
+	}
+	share_settings
+	{
+			"Read"
+			{
+				name = "Read"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have read permission for all components\n"
+			}
+			"Write"
+			{
+				name = "Write"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have write permission for all components\n"
+			}
+			"Developer"
+			{
+				name = "Developer"
+				type = Developer
+				permissions = {Chat:false, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Developer Profile\n"
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				"CEO"
+				{
+					description = "User belonging to this role can access data of all other users."
+				}
+			}
+	}
+
+	customize
+	{
+		icon
+		{
+			text = "ROS"
+			background color = "theme"
+			foreground color = "#ffffff"
+		}
+	}
+
+	web
+	{
+		forms
+		{
+			form Category
+			{
+				label placement = left
+			}
+			form Ingredient
+			{
+				label placement = left
+			}
+			form Menu_Item
+			{
+				label placement = left
+			}
+			form Order
+			{
+				label placement = left
+			}
+			form Order_Item
+			{
+				label placement = left
+			}
+			form Payment
+			{
+				label placement = left
+			}
+			form Purchase_Request
+			{
+				label placement = left
+			}
+			form Recipe
+			{
+				label placement = left
+			}
+			form Restaurant_Table
+			{
+				label placement = left
+			}
+		}
+		reports
+		{
+			report All_Categories
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Category as "Category_Name"
+								Display_Order
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Category as "Category_Name"
+								Display_Order
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Menu_Item_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Item_Name
+								Category
+								Price
+								Image
+								Food_Type
+								Prep_Time_Min
+								Available
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Item_Name
+								Category
+								Price
+								Image
+								Food_Type
+								Prep_Time_Min
+								Available
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Ingredient_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Ingredient_Name
+								Unit
+								Current_Stock
+								Reorder_Level
+								Supplier_Email
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Ingredient_Name
+								Unit
+								Current_Stock
+								Reorder_Level
+								Supplier_Email
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Recipes
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Menu_Item
+								Ingredient
+								Qty_Required
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Menu_Item
+								Ingredient
+								Qty_Required
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Restaurant_Table_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Table_No
+								Capacity as "Capacity "
+								Status
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Table_No
+								Capacity as "Capacity "
+								Status
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Payments
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order
+								Amount
+								Payment_Mode
+								Paid_On
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order
+								Amount
+								Payment_Mode
+								Paid_On
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report All_Orders
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID
+								Table
+								Status
+								Total
+								Payment_Status
+								Order_Time
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID
+								Table
+								Status
+								Total
+								Payment_Status
+								Stock_Deducted
+								Order_Time
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Purchase_Request_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Ingredient
+								Suggested_Qty
+								Status1 as "Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Ingredient
+								Suggested_Qty
+								Status1 as "Status"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Kitchen_Display
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								Table.Table_No as "Table_No"
+								Status
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order_ID
+								Table
+								Status
+								Total
+								Payment_Status
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+			report Order_Item_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order
+								Menu_Item
+								Quantity
+								Price
+								Line_Total
+								Special_Notes
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Delete   	   
+							Duplicate   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								Order
+								Menu_Item
+								Quantity
+								Price
+								Line_Total
+								Special_Notes
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+							)
+						)
+				)
+			}
+		}
+		menu
+		{
+			unused
+			{
+				page Dashboard
+				{
+					icon = "ui-1-dashboard-half"
+				}
+			}
+			space Space
+			{
+				displayname = "Space"
+				icon = "objects-spaceship"
+
+				section Categories
+				{
+					displayname = "Categories"
+					icon = "design-2-selection"
+					form  Category
+					{
+						icon = "education-school"
+					}
+					report All_Categories
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section ZC_App_Preferences
+				{
+					displayname = "App Preferences"
+					icon = "design-app"
+					systemcomponent
+					{
+						type = localization
+						displayname = "Language Selection"
+						icon = "education-language"
+					}
+					systemcomponent
+					{
+						type = connection
+						displayname = "Integrations"
+						icon = "tech-2-connection"
+					}
+				}
+				section ZC_Approvals
+				{
+					displayname = "Approvals"
+					icon = "ui-2-hourglass"
+					systemcomponent
+					{
+						type = approval
+						approval status = pending
+						displayname = "Pending Tasks"
+						icon = "ui-2-hourglass"
+					}
+					systemcomponent
+					{
+						type = approval
+						approval status = completed
+						displayname = "Completed Tasks"
+						icon = "design-todo"
+					}
+				}
+				section SharedAnalytics_Section
+				{
+					type = shared_user_report_section
+					displayname = "Reports"
+					icon = "business-chart-bar-33"
+				}
+				section Menu_Item
+				{
+					displayname = "Menu_Item"
+					icon = "tech-desktop"
+					form  Menu_Item
+					{
+						icon = "tech-desktop"
+					}
+					report Menu_Item_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Ingredient
+				{
+					displayname = "Ingredient"
+					icon = "design-blend"
+					form  Ingredient
+					{
+						icon = "design-blend"
+					}
+					report Ingredient_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Recipes
+				{
+					displayname = "Recipes"
+					icon = "food-recipe-book-47"
+					form  Recipe
+					{
+						icon = "food-recipe-book-47"
+					}
+					report All_Recipes
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Restaurant_Table
+				{
+					displayname = "Restaurant_Table"
+					icon = "tech-desktop"
+					form  Restaurant_Table
+					{
+						icon = "tech-desktop"
+					}
+					report Restaurant_Table_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Payments
+				{
+					displayname = "Payments"
+					icon = "shopping-credit-card-in"
+					form  Payment
+					{
+						icon = "shopping-receipt"
+					}
+					report All_Payments
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Orders
+				{
+					displayname = "Orders"
+					icon = "shopping-list"
+					form  Order
+					{
+						icon = "shopping-delivery-fast"
+					}
+					report All_Orders
+					{
+						icon = "tech-desktop"
+					}
+					report Kitchen_Display
+					{
+						icon = "shopping-delivery-fast"
+					}
+ 
+					report Revenue_Trend
+					{
+						icon = "shopping-delivery-fast"
+					}
+ 
+					report Orders_by_Status
+					{
+						icon = "shopping-delivery-fast"
+					}
+				}
+				section Purchase_Request
+				{
+					displayname = "Purchase_Request"
+					icon = "tech-desktop"
+					form  Purchase_Request
+					{
+						icon = "tech-desktop"
+					}
+					report Purchase_Request_Report
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Order_Item
+				{
+					displayname = "Order_Item"
+					icon = "tech-desktop"
+					form  Order_Item
+					{
+						icon = "tech-desktop"
+					}
+					report Order_Item_Report
+					{
+						icon = "tech-desktop"
+					}
+ 
+					report Top_Selling_Items
+					{
+						icon = "tech-desktop"
+					}
+ 
+					report Sales_by_Category
+					{
+						icon = "tech-desktop"
+					}
+				}
+				section Sales_Dashboard
+				{
+					displayname = "Sales Dashboard"
+					icon = "business-businessman-03"
+					page Sales_Dashboard
+					{
+						icon = "business-businessman-03"
+					}
+				}
+			}
+			preference
+			{
+				icon
+				{
+					style = outline
+				}
+			}
+		}
+		customize
+		{
+			layout
+			{
+				theme = "theme_2"
+			}
+			font = "lato"
+			color options
+			{
+				color = "11"
+			}
+			logo
+			{
+				preference = "app_icon"
+				placement = "left"
+			}
+		}
+	}
+	phone
+	{
+		forms
+		{
+			form Category
+			{
+				label placement = auto
+			}
+			form Ingredient
+			{
+				label placement = auto
+			}
+			form Menu_Item
+			{
+				label placement = auto
+			}
+			form Order
+			{
+				label placement = auto
+			}
+			form Order_Item
+			{
+				label placement = auto
+			}
+			form Payment
+			{
+				label placement = auto
+			}
+			form Purchase_Request
+			{
+				label placement = auto
+			}
+			form Recipe
+			{
+				label placement = auto
+			}
+			form Restaurant_Table
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = twocolumn
+			font = "default"
+			style = "1"
+			color options
+			{
+				color = chryslerpurple
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	tablet
+	{
+		forms
+		{
+			form Category
+			{
+				label placement = auto
+			}
+			form Ingredient
+			{
+				label placement = auto
+			}
+			form Menu_Item
+			{
+				label placement = auto
+			}
+			form Order
+			{
+				label placement = auto
+			}
+			form Order_Item
+			{
+				label placement = auto
+			}
+			form Payment
+			{
+				label placement = auto
+			}
+			form Purchase_Request
+			{
+				label placement = auto
+			}
+			form Recipe
+			{
+				label placement = auto
+			}
+			form Restaurant_Table
+			{
+				label placement = auto
+			}
+		}
+		customize
+		{
+			layout = slidingpane
+			font = "default"
+			style = "1"
+			color options
+			{
+				color = darkgrey
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	
+	reports configuration
+	{
+	
+		Version = 2000056474191
+		Key     = "vaBU0Pv3Mg1zBhCxnuZEUbBRtptyW393Q4sa5yF0zYjWHGD9WnCyF7RaB3D7vU0B5118aRfNFepvqB0qGkrX0e4Hue8kPsYEZ157"
+	}
+}
